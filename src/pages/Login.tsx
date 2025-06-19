@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Input } from '@/components/ui/input'
 
 export default function Login() {
   const [user, setUser] = useState('')
@@ -20,12 +21,12 @@ export default function Login() {
     <div className="login-container">
       <h1>Login</h1>
       <form onSubmit={handleSubmit} className="login-form">
-        <input
+        <Input
           placeholder="Usuário"
           value={user}
           onChange={(e) => setUser(e.target.value)}
         />
-        <input
+        <Input
           type="password"
           placeholder="Senha"
           value={pass}

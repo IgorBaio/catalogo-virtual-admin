@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Input } from '@/components/ui/input'
 
 interface Product {
   OwnerId: string
@@ -62,12 +63,12 @@ export default function Products() {
     <div className="products-container">
       <h1>Produtos</h1>
       <form onSubmit={addProduct} className="product-form">
-        <input name="OwnerId" placeholder="Owner" value={form.OwnerId} onChange={handleChange} />
-        <input name="ProductName" placeholder="Nome" value={form.ProductName} onChange={handleChange} />
-        <input name="Image" placeholder="Imagem" value={form.Image} onChange={handleChange} />
-        <input name="Price" placeholder="Preço" value={form.Price} onChange={handleChange} />
+        <Input name="OwnerId" placeholder="Owner" value={form.OwnerId} onChange={handleChange} />
+        <Input name="ProductName" placeholder="Nome" value={form.ProductName} onChange={handleChange} />
+        <Input name="Image" placeholder="Imagem" value={form.Image} onChange={handleChange} />
+        <Input name="Price" placeholder="Preço" value={form.Price} onChange={handleChange} />
         <textarea name="Description" placeholder="Descrição" value={form.Description} onChange={handleChange} />
-        <input name="WhatsappMessage" placeholder="Mensagem WhatsApp" value={form.WhatsappMessage} onChange={handleChange} />
+        <Input name="WhatsappMessage" placeholder="Mensagem WhatsApp" value={form.WhatsappMessage} onChange={handleChange} />
         <button type="submit">Adicionar</button>
       </form>
       <ul className="product-list">
