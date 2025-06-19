@@ -2,6 +2,7 @@ import React from "react"
 import { Routes, Route, Navigate } from 'react-router-dom'
 import Login from './pages/Login'
 import Products from './pages/Products'
+import ProductList from './pages/ProductList'
 import './App.css'
 
 function PrivateRoute({ children }: { children: React.ReactElement }) {
@@ -18,6 +19,14 @@ export default function App() {
         element={
           <PrivateRoute>
             <Products />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/list"
+        element={
+          <PrivateRoute>
+            <ProductList />
           </PrivateRoute>
         }
       />
