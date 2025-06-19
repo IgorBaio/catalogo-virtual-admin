@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import { Input } from '../components/ui/input'
+import { Button } from '../components/ui/button'
 
 interface Product {
   OwnerId: string
@@ -61,14 +63,20 @@ export default function Products() {
   return (
     <div className="products-container">
       <h1>Produtos</h1>
-      <form onSubmit={addProduct} className="product-form">
-        <input name="OwnerId" placeholder="Owner" value={form.OwnerId} onChange={handleChange} />
-        <input name="ProductName" placeholder="Nome" value={form.ProductName} onChange={handleChange} />
-        <input name="Image" placeholder="Imagem" value={form.Image} onChange={handleChange} />
-        <input name="Price" placeholder="Preço" value={form.Price} onChange={handleChange} />
-        <textarea name="Description" placeholder="Descrição" value={form.Description} onChange={handleChange} />
-        <input name="WhatsappMessage" placeholder="Mensagem WhatsApp" value={form.WhatsappMessage} onChange={handleChange} />
-        <button type="submit">Adicionar</button>
+      <form onSubmit={addProduct} className="product-form space-y-2">
+        <Input name="OwnerId" placeholder="Owner" value={form.OwnerId} onChange={handleChange} />
+        <Input name="ProductName" placeholder="Nome" value={form.ProductName} onChange={handleChange} />
+        <Input name="Image" placeholder="Imagem" value={form.Image} onChange={handleChange} />
+        <Input name="Price" placeholder="Preço" value={form.Price} onChange={handleChange} />
+        <textarea
+          name="Description"
+          placeholder="Descrição"
+          value={form.Description}
+          onChange={handleChange}
+          className="min-h-[80px] rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        />
+        <Input name="WhatsappMessage" placeholder="Mensagem WhatsApp" value={form.WhatsappMessage} onChange={handleChange} />
+        <Button type="submit" className="w-full">Adicionar</Button>
       </form>
       <ul className="product-list">
         {products.map((p) => (
@@ -79,7 +87,9 @@ export default function Products() {
               <p>{p.Description}</p>
               <span>R$ {p.Price}</span>
             </div>
-            <button onClick={() => remove(p.id)}>Excluir</button>
+            <Button variant="destructive" onClick={() => remove(p.id)}>
+              Excluir
+            </Button>
           </li>
         ))}
       </ul>

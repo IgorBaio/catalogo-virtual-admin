@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Input } from '../components/ui/input'
+import { Button } from '../components/ui/button'
 
 export default function Login() {
   const [user, setUser] = useState('')
@@ -19,19 +21,19 @@ export default function Login() {
   return (
     <div className="login-container">
       <h1>Login</h1>
-      <form onSubmit={handleSubmit} className="login-form">
-        <input
+      <form onSubmit={handleSubmit} className="login-form space-y-2">
+        <Input
           placeholder="Usuário"
           value={user}
           onChange={(e) => setUser(e.target.value)}
         />
-        <input
+        <Input
           type="password"
           placeholder="Senha"
           value={pass}
           onChange={(e) => setPass(e.target.value)}
         />
-        <button type="submit">Entrar</button>
+        <Button type="submit" className="w-full">Entrar</Button>
       </form>
     </div>
   )
