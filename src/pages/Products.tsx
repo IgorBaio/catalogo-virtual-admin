@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 
 interface Product {
   OwnerId: string
@@ -67,7 +68,12 @@ export default function Products() {
         <Input name="ProductName" placeholder="Nome" value={form.ProductName} onChange={handleChange} />
         <Input name="Image" placeholder="Imagem" value={form.Image} onChange={handleChange} />
         <Input name="Price" placeholder="Preço" value={form.Price} onChange={handleChange} />
-        <textarea name="Description" placeholder="Descrição" value={form.Description} onChange={handleChange} />
+        <Textarea
+          name="Description"
+          placeholder="Descrição"
+          value={form.Description}
+          onChange={handleChange}
+        />
         <Input name="WhatsappMessage" placeholder="Mensagem WhatsApp" value={form.WhatsappMessage} onChange={handleChange} />
         <button type="submit">Adicionar</button>
       </form>
