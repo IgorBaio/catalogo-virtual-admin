@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Input } from '../components/ui/input'
 import { Button } from '../components/ui/button'
+import { Card } from '../components/ui/card'
 
 export default function Login() {
   const [user, setUser] = useState('')
@@ -19,9 +20,9 @@ export default function Login() {
   }
 
   return (
-    <div className="login-container">
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit} className="login-form space-y-2">
+    <Card className="w-full max-w-sm space-y-4 p-6">
+      <h1 className="text-center text-2xl font-semibold">Login</h1>
+      <form onSubmit={handleSubmit} className="space-y-2">
         <Input
           placeholder="Usuário"
           value={user}
@@ -35,6 +36,6 @@ export default function Login() {
         />
         <Button type="submit" className="w-full">Entrar</Button>
       </form>
-    </div>
+    </Card>
   )
 }

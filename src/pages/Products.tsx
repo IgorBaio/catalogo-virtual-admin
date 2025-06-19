@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Input } from '../components/ui/input'
+import { Textarea } from '../components/ui/textarea'
 import { Button } from '../components/ui/button'
+import { Card } from '../components/ui/card'
 
 interface Product {
   OwnerId: string
@@ -61,28 +63,29 @@ export default function Products() {
   }
 
   return (
-    <div className="products-container">
-      <h1>Produtos</h1>
-      <form onSubmit={addProduct} className="product-form space-y-2">
-        <Input name="OwnerId" placeholder="Owner" value={form.OwnerId} onChange={handleChange} />
-        <Input name="ProductName" placeholder="Nome" value={form.ProductName} onChange={handleChange} />
-        <Input name="Image" placeholder="Imagem" value={form.Image} onChange={handleChange} />
-        <Input name="Price" placeholder="Preço" value={form.Price} onChange={handleChange} />
-        <textarea
-          name="Description"
-          placeholder="Descrição"
-          value={form.Description}
-          onChange={handleChange}
-          className="min-h-[80px] rounded-lg border border-input bg-background px-3 py-2 text-sm shadow-sm transition-colors ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-        />
-        <Input name="WhatsappMessage" placeholder="Mensagem WhatsApp" value={form.WhatsappMessage} onChange={handleChange} />
-        <Button type="submit" className="w-full">Adicionar</Button>
-      </form>
-      <ul className="product-list">
+    <div className="space-y-6">
+      <Card className="w-full max-w-lg space-y-4 p-6">
+        <h1 className="text-center text-2xl font-semibold">Produtos</h1>
+        <form onSubmit={addProduct} className="space-y-2">
+          <Input name="OwnerId" placeholder="Owner" value={form.OwnerId} onChange={handleChange} />
+          <Input name="ProductName" placeholder="Nome" value={form.ProductName} onChange={handleChange} />
+          <Input name="Image" placeholder="Imagem" value={form.Image} onChange={handleChange} />
+          <Input name="Price" placeholder="Preço" value={form.Price} onChange={handleChange} />
+          <Textarea
+            name="Description"
+            placeholder="Descrição"
+            value={form.Description}
+            onChange={handleChange}
+          />
+          <Input name="WhatsappMessage" placeholder="Mensagem WhatsApp" value={form.WhatsappMessage} onChange={handleChange} />
+          <Button type="submit" className="w-full">Adicionar</Button>
+        </form>
+      </Card>
+      <ul className="space-y-4">
         {products.map((p) => (
-          <li key={p.id} className="product-item">
-            <img src={p.Image} alt={p.ProductName} />
-            <div>
+          <li key={p.id} className="flex items-center gap-4 rounded-lg border p-4">
+            <img src={p.Image} alt={p.ProductName} className="h-16 w-16 object-cover" />
+            <div className="flex-1">
               <strong>{p.ProductName}</strong>
               <p>{p.Description}</p>
               <span>R$ {p.Price}</span>
