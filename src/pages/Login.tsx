@@ -1,3 +1,6 @@
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Separator } from '@/components/ui/separator'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -19,19 +22,21 @@ export default function Login() {
   return (
     <div className="login-container">
       <h1>Login</h1>
+      <Separator className="my-4" />
       <form onSubmit={handleSubmit} className="login-form">
-        <input
+        <Input
           placeholder="Usuário"
           value={user}
           onChange={(e) => setUser(e.target.value)}
         />
-        <input
+        <Input
           type="password"
           placeholder="Senha"
           value={pass}
           onChange={(e) => setPass(e.target.value)}
         />
-        <button type="submit">Entrar</button>
+      <Separator className="my-4" />
+        <Button type="submit" variant={'secondary'}>Entrar</Button>
       </form>
     </div>
   )

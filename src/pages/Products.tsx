@@ -1,3 +1,7 @@
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Separator } from '@/components/ui/separator'
+import { Textarea } from '@/components/ui/textarea'
 import { useState, useEffect } from 'react'
 
 interface Product {
@@ -61,14 +65,16 @@ export default function Products() {
   return (
     <div className="products-container">
       <h1>Produtos</h1>
+      <Separator className="my-4" />
       <form onSubmit={addProduct} className="product-form">
-        <input name="OwnerId" placeholder="Owner" value={form.OwnerId} onChange={handleChange} />
-        <input name="ProductName" placeholder="Nome" value={form.ProductName} onChange={handleChange} />
-        <input name="Image" placeholder="Imagem" value={form.Image} onChange={handleChange} />
-        <input name="Price" placeholder="Preço" value={form.Price} onChange={handleChange} />
-        <textarea name="Description" placeholder="Descrição" value={form.Description} onChange={handleChange} />
-        <input name="WhatsappMessage" placeholder="Mensagem WhatsApp" value={form.WhatsappMessage} onChange={handleChange} />
-        <button type="submit">Adicionar</button>
+        <Input name="OwnerId" placeholder="Owner" value={form.OwnerId} onChange={handleChange} />
+        <Input name="ProductName" placeholder="Nome" value={form.ProductName} onChange={handleChange}  />
+        <Input name="Image" placeholder="Imagem" value={form.Image} onChange={handleChange} />
+        <Input name="Price" placeholder="Preço" value={form.Price} onChange={handleChange} />
+        <Textarea name="Description" placeholder="Descrição" value={form.Description} onChange={handleChange} />
+        <Input name="WhatsappMessage" placeholder="Mensagem WhatsApp" value={form.WhatsappMessage} onChange={handleChange} />
+      <Separator className="my-4" />
+        <Button type="submit" variant={"destructive"} >Adicionar</Button>
       </form>
       <ul className="product-list">
         {products.map((p) => (
