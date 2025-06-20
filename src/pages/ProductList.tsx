@@ -11,17 +11,8 @@ import {
   SheetFooter,
   SheetClose,
 } from '@/components/ui/sheet'
-
-interface Product {
-  OwnerId: string
-  ProductName: string
-  Image: string
-  Price: string
-  Description: string
-  id: string
-  WhatsappMessage: string
-  Active: string
-}
+import type { Product } from '@/lib/api'
+import { getProducts, updateProduct } from '@/lib/api'
 
 export default function ProductList() {
   const [products, setProducts] = useState<Product[]>([])
@@ -32,13 +23,7 @@ export default function ProductList() {
   useEffect(() => {
     async function load() {
       try {
-        const res = await fetch(
-          'https://webhook-workflows.baiosystems.com.br/webhook/produtos'
-        )
-        if (!res.ok) {
-          throw new Error(res.statusText)
-        }
-        const data = (await res.json()) as Product[]
+        const data = await getProducts()
         setProducts(data)
       } catch (err) {
         console.error(err)
@@ -62,13 +47,19 @@ export default function ProductList() {
     setEditing({ ...editing, [e.target.name]: e.target.value })
   }
 
-  function saveEdit(e: React.FormEvent) {
+  async function saveEdit(e: React.FormEvent) {
     e.preventDefault()
     if (!editing) return
-    setProducts((prev) =>
-      prev.map((item) => (item.id === editing.id ? editing : item))
-    )
-    setOpen(false)
+    try {
+      await updateProduct(editing)
+      setProducts((prev) =>
+        prev.map((item) => (item.id === editing.id ? editing : item))
+      )
+      setOpen(false)
+    } catch (err) {
+      console.error(err)
+      alert('Erro ao atualizar produto')
+    }
   }
 
   if (loading) {
