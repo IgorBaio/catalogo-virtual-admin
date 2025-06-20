@@ -29,5 +29,6 @@ export default defineConfig({
     port: 8080,
     host: true,
     allowedHosts: ['.baiosystems.com.br', 'igorbaio.github.io']
-  }
+  },
+  base: "/catalogo-virtual-admin/"
 })
