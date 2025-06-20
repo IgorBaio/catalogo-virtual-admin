@@ -140,11 +140,13 @@ export default function ProductList() {
               />
               <SheetFooter className="mt-4">
                 <SheetClose asChild>
-                  <Button type="button" variant="outline">
+                  <Button type="button" variant="destructive" style={{
+                    backgroundColor: 'oklch(0.552 0.016 285.938)'
+                  }} >
                     Cancelar
                   </Button>
                 </SheetClose>
-                <Button type="submit" variant="default">
+                <Button type="submit" variant="secondary">
                   Salvar
                 </Button>
               </SheetFooter>
