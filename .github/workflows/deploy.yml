@@ -1,0 +1,33 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # O deploy será feito ao fazer push na branch 'main'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'  # Ou a versão do Node que você está usando
+
+    - name: Install dependencies
+      run: npm install  # Ou yarn install, dependendo do seu gerenciador de pacotes
+
+    - name: Build the project
+      run: npm run build  # Ou o comando de build do seu projeto
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}  # GitHub token para autenticação
+        publish_dir: ./dist  # O diretório onde seus arquivos estáticos ficam (ex: 'dist' ou 'build')
+        user_name: 'GitHub Actions'  # Nome do usuário do commit
+        user_email: 'actions@github.com'  # E-mail do commit
