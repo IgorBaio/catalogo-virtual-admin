@@ -27,7 +27,7 @@ jobs:
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}  # GitHub token para autenticação
+        github_token: ${{ secrets.GH_TOKEN }}  # GitHub token para autenticação
         publish_dir: ./dist  # O diretório onde seus arquivos estáticos ficam (ex: 'dist' ou 'build')
         user_name: 'GitHub Actions'  # Nome do usuário do commit
         user_email: 'actions@github.com'  # E-mail do commit
