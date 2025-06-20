@@ -16,7 +16,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '16'  # Ou a versão do Node que você está usando
+        node-version: '22.16.0'  # Ou a versão do Node que você está usando
 
     - name: Install dependencies
       run: npm install  # Ou yarn install, dependendo do seu gerenciador de pacotes
