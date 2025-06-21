@@ -12,7 +12,18 @@ import {
   SheetClose,
 } from '@/components/ui/sheet'
 import type { Product } from '@/lib/api'
-import { getProducts, updateProduct } from '@/lib/api'
+import { getProducts, updateProduct, deleteProduct } from '@/lib/api'
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogFooter,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from '@/components/ui/alert-dialog'
 
 export default function ProductList() {
   const [products, setProducts] = useState<Product[]>([])
@@ -62,6 +73,16 @@ export default function ProductList() {
     }
   }
 
+  async function remove(id: string) {
+    try {
+      await deleteProduct(id)
+      setProducts((prev) => prev.filter((item) => item.id !== id))
+    } catch (err) {
+      console.error(err)
+      alert('Erro ao remover produto')
+    }
+  }
+
   if (loading) {
     return <p>Carregando...</p>
   }
@@ -79,9 +100,30 @@ export default function ProductList() {
               <p>{p.Description}</p>
               <span>R$ {p.Price}</span>
             </div>
-            <Button variant="outline" onClick={() => handleEdit(p)}>
-              Editar
-            </Button>
+            <div className="flex gap-2">
+              <Button variant="outline" onClick={() => handleEdit(p)}>
+                Editar
+              </Button>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="destructive">Excluir</Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Remover produto</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Deseja remover {p.ProductName}?
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                    <AlertDialogAction onClick={() => remove(p.id)}>
+                      Confirmar
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
           </li>
         ))}
       </ul>

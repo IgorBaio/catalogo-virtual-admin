@@ -26,3 +26,11 @@ export async function updateProduct(product: Product) {
   if (!res.ok) throw new Error(res.statusText)
   return res.json()
 }
+
+export async function deleteProduct(id: string) {
+  const res = await fetch(`${API_BASE}/produtos/${id}`, {
+    method: 'DELETE',
+  })
+  if (!res.ok) throw new Error(res.statusText)
+  return res.json()
+}
