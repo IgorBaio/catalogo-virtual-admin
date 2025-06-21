@@ -23,7 +23,7 @@ export default function ProductList() {
   useEffect(() => {
     async function load() {
       try {
-        const data = await getProducts()
+        const data = await getProducts('all')
         setProducts(data)
       } catch (err) {
         console.error(err)
