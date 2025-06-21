@@ -9,16 +9,15 @@ export interface Product {
   Active: string
 }
 
-const API_BASE = 'https://webhook-workflows.baiosystems.com.br/webhook'
-
-export async function getProducts(): Promise<Product[]> {
-  const res = await fetch(`${API_BASE}/produtos`)
+const API_BASE = 'https://catalogo-virtual-server.onrender.com'
+export async function getProducts(query: string): Promise<Product[]> {
+  const res = await fetch(`${API_BASE}/api/produto/query/${encodeURIComponent(query)}`)
   if (!res.ok) throw new Error(res.statusText)
   return res.json()
 }
 
 export async function updateProduct(product: Product) {
-  const res = await fetch(`${API_BASE}/produtos/${product.id}`, {
+  const res = await fetch(`${API_BASE}/api/produto/${product.id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(product),
