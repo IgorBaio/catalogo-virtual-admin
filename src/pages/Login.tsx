@@ -19,6 +19,7 @@ export default function Login() {
       const data = await login(user, email, pass)
       localStorage.setItem('logged', 'true')
       localStorage.setItem('userData', JSON.stringify(data))
+      localStorage.setItem('loginData', JSON.stringify({ user, email, pass }))
       navigate('/products')
     } catch (err) {
       setError((err as Error).message || 'Credenciais inválidas')
