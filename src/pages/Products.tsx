@@ -3,6 +3,7 @@ import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 import { Textarea } from '@/components/ui/textarea'
 import { useState, useEffect } from 'react'
+import DrawerMenu from "@/components/DrawerMenu"
 
 interface Product {
   OwnerId: string
@@ -64,8 +65,8 @@ export default function Products() {
 
   return (
     <div className="products-container">
-      <h1>Produtos</h1>
-      <Separator className="my-4" />
+        <DrawerMenu />
+        <h1>Produtos</h1>
       <form onSubmit={addProduct} className="product-form">
         <Input name="OwnerId" placeholder="Owner" value={form.OwnerId} onChange={handleChange} />
         <Input name="ProductName" placeholder="Nome" value={form.ProductName} onChange={handleChange}  />
