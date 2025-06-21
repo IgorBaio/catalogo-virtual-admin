@@ -33,3 +33,22 @@ export async function deleteProduct(id: string) {
   if (!res.ok) throw new Error(res.statusText)
   return res.json()
 }
+
+export interface LoginResponse {
+  token: string
+  [key: string]: unknown
+}
+
+export async function login(user: string, email: string, password: string): Promise<LoginResponse> {
+  const res = await fetch(`${API_BASE}/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ user, email, password }),
+  })
+
+  if (!res.ok) {
+    const message = await res.text()
+    throw new Error(message || res.statusText)
+  }
+  return res.json()
+}
