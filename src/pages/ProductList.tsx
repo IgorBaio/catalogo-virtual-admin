@@ -24,6 +24,7 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from '@/components/ui/alert-dialog'
+import DrawerMenu from "@/components/DrawerMenu"
 
 export default function ProductList() {
   const [products, setProducts] = useState<Product[]>([])
@@ -89,6 +90,7 @@ export default function ProductList() {
 
   return (
     <div className="products-container">
+        <DrawerMenu />
       <h1>Produtos</h1>
       <Separator className="my-4" />
       <ul className="product-list">
