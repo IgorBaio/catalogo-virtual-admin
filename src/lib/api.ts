@@ -13,6 +13,10 @@ export interface ProductResponse {
   data: Product[]
 }
 
+export interface CreateProductResponse {
+  data: Product
+}
+
 export interface ProductRequest {
   OwnerId: string
   Name: string
@@ -20,6 +24,16 @@ export interface ProductRequest {
   Price: number
   Description: string
   id: string
+  WhatsappMessage: string
+  Active: string
+}
+
+export interface ProductCreateRequest {
+  OwnerId: string
+  Name: string
+  Image: string
+  Price: number
+  Description: string
   WhatsappMessage: string
   Active: string
 }
@@ -57,6 +71,26 @@ export async function updateProduct(product: Product) {
 export async function deleteProduct(id: string) {
   const res = await fetch(`${API_BASE}/api/produto/delete/${id}`, {
     method: 'DELETE',
+  })
+  if (!res.ok) throw new Error(res.statusText)
+  return res.json()
+}
+
+export async function createProduct(product: Omit<Product, 'id'>): Promise<CreateProductResponse> {
+  const productRequest: ProductCreateRequest = {
+    OwnerId: product.ownerId || '',
+    Name: product.name,
+    Image: product.image,
+    Price: Number(product.price.replace(',', '.')),
+    Description: product.description,
+    WhatsappMessage: product.whatsappMessage,
+    Active: product.isActive?.toString() || 'true',
+  }
+
+  const res = await fetch(`${API_BASE}/api/produto`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(productRequest),
   })
   if (!res.ok) throw new Error(res.statusText)
   return res.json()

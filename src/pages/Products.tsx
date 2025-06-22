@@ -2,61 +2,54 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 import { Textarea } from '@/components/ui/textarea'
-import { useState, useEffect } from 'react'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { useState } from 'react'
 import DrawerMenu from "@/components/DrawerMenu"
+import type { Product } from '@/lib/api'
+import { createProduct } from '@/lib/api'
 
-interface Product {
-  OwnerId: string
-  ProductName: string
-  Image: string
-  Price: string
-  Description: string
-  id: string
-  WhatsappMessage: string
-  Active: string
-}
-
-function createId() {
-  return Math.random().toString(36).substring(2, 10)
-}
 
 export default function Products() {
-  const [products, setProducts] = useState<Product[]>(() => {
-    const stored = localStorage.getItem('products')
-    return stored ? JSON.parse(stored) : []
-  })
+  const [products, setProducts] = useState<Product[]>([])
+  const [errorMsg, setErrorMsg] = useState<string | null>(null)
+  const company = JSON.parse(localStorage.getItem('userData') || '{}').company
 
   const [form, setForm] = useState<Omit<Product, 'id'>>({
-    OwnerId: '',
-    ProductName: '',
-    Image: '',
-    Price: '',
-    Description: '',
-    WhatsappMessage: '',
-    Active: 'true',
+    ownerId: '',
+    name: '',
+    image: '',
+    price: '',
+    description: '',
+    whatsappMessage: '',
+    isActive: 'true',
   })
 
-  useEffect(() => {
-    localStorage.setItem('products', JSON.stringify(products))
-  }, [products])
-
-  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  function handleChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
-  function addProduct(e: React.FormEvent) {
+  async function addProduct(e: React.FormEvent) {
     e.preventDefault()
-    const newProduct: Product = { ...form, id: createId() }
-    setProducts([...products, newProduct])
-    setForm({
-      OwnerId: '',
-      ProductName: '',
-      Image: '',
-      Price: '',
-      Description: '',
-      WhatsappMessage: '',
-      Active: 'true',
-    })
+    try {
+      const result = await createProduct(form)
+      const created = result.data
+      setProducts([...products, created])
+      setForm({
+        ownerId: '',
+        name: '',
+        image: '',
+        price: '',
+        description: '',
+        whatsappMessage: '',
+        isActive: 'true',
+      })
+      setErrorMsg(null)
+    } catch (err) {
+      console.error(err)
+      setErrorMsg('Erro ao criar produto')
+    }
   }
 
   function remove(id: string) {
@@ -65,31 +58,29 @@ export default function Products() {
 
   return (
     <div className="products-container">
-        <DrawerMenu />
-        <h1>Produtos</h1>
-      <form onSubmit={addProduct} className="product-form">
-        <Input name="OwnerId" placeholder="Owner" value={form.OwnerId} onChange={handleChange} />
-        <Input name="ProductName" placeholder="Nome" value={form.ProductName} onChange={handleChange}  />
-        <Input name="Image" placeholder="Imagem" value={form.Image} onChange={handleChange} />
-        <Input name="Price" placeholder="Preço" value={form.Price} onChange={handleChange} />
-        <Textarea name="Description" placeholder="Descrição" value={form.Description} onChange={handleChange} />
-        <Input name="WhatsappMessage" placeholder="Mensagem WhatsApp" value={form.WhatsappMessage} onChange={handleChange} />
+      <DrawerMenu />
+      <h1>Produtos</h1>
+      {errorMsg && (
+        <>
+          <Separator className="my-4" />
+          <Alert className="my-4">
+            <AlertTitle>Erro</AlertTitle>
+            <AlertDescription>{errorMsg}</AlertDescription>
+          </Alert>
+        </>
+      )}
       <Separator className="my-4" />
+      <form onSubmit={addProduct} className="product-form">
+        <Input name="ownerId" placeholder="Owner" value={company} disabled style={{ border: 'none' }} />
+        <Input name="name" placeholder="Nome" value={form.name} onChange={handleChange} />
+        <Input name="image" placeholder="Imagem" value={form.image} onChange={handleChange} />
+        <Input name="price" placeholder="Preço" value={form.price} onChange={handleChange} />
+        <Textarea name="description" placeholder="Descrição" value={form.description} onChange={handleChange} />
+        <Input name="whatsappMessage" placeholder="Mensagem WhatsApp" value={form.whatsappMessage} onChange={handleChange} />
+        <Separator className="my-4" />
         <Button type="submit" variant={"destructive"} >Adicionar</Button>
       </form>
-      <ul className="product-list">
-        {products.map((p) => (
-          <li key={p.id} className="product-item">
-            <img src={p.Image} alt={p.ProductName} />
-            <div>
-              <strong>{p.ProductName}</strong>
-              <p>{p.Description}</p>
-              <span>R$ {p.Price}</span>
-            </div>
-            <button onClick={() => remove(p.id)}>Excluir</button>
-          </li>
-        ))}
-      </ul>
+
     </div>
   )
 }
