@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/sheet'
 import type { Product, ProductResponse } from '@/lib/api'
 import { getProducts, updateProduct, deleteProduct } from '@/lib/api'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -31,6 +32,7 @@ export default function ProductList() {
   const [loading, setLoading] = useState(true)
   const [open, setOpen] = useState(false)
   const [editing, setEditing] = useState<Product | null>(null)
+  const [errorMsg, setErrorMsg] = useState<string | null>(null)
 
   useEffect(() => {
     async function load() {
@@ -74,19 +76,22 @@ export default function ProductList() {
         prev.map((item) => (item.id === editing.id ? editing : item))
       )
       setOpen(false)
+      setErrorMsg(null)
     } catch (err) {
       console.error(err)
-      alert('Erro ao atualizar produto')
+      setOpen(false)
+      setErrorMsg('Erro ao atualizar produto')
     }
   }
-
+  
   async function remove(id: string) {
     try {
       await deleteProduct(id)
       setProducts((prev) => prev.filter((item) => item.id !== id))
+      setErrorMsg(null)
     } catch (err) {
       console.error(err)
-      alert('Erro ao remover produto')
+      setErrorMsg('Erro ao remover produto')
     }
   }
 
@@ -98,6 +103,12 @@ export default function ProductList() {
     <div className="products-container">
         <DrawerMenu />
       <h1>Produtos</h1>
+      {errorMsg && (
+        <Alert className="my-4">
+          <AlertTitle>Erro</AlertTitle>
+          <AlertDescription>{errorMsg}</AlertDescription>
+        </Alert>
+      )}
       <Separator className="my-4" />
       <ul className="product-list" key={products.length}>
         {products?.map((p: Product) => (
@@ -147,7 +158,8 @@ export default function ProductList() {
                 name="ownerId"
                 placeholder="Owner"
                 value={editing.ownerId}
-                onChange={handleChange}
+                disabled
+                style={{ border: 'none' }}
               />
               <Input
                 name="name"

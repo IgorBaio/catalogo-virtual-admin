@@ -37,7 +37,7 @@ export async function updateProduct(product: Product) {
     OwnerId: product.ownerId || '',
     Name: product.name,
     Image: product.image,
-    Price: Number(product.price),
+    Price: Number(product.price.replace(',', '.')),
     Description: product.description,
     id: product.id,
     WhatsappMessage: product.whatsappMessage,
