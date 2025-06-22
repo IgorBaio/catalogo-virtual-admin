@@ -20,7 +20,7 @@ export default function Login() {
       localStorage.setItem('logged', 'true')
       localStorage.setItem('userData', JSON.stringify(data))
       localStorage.setItem('loginData', JSON.stringify({ user, email, pass }))
-      navigate('/products')
+      navigate('/home')
     } catch (err) {
       setError((err as Error).message || 'Credenciais inválidas')
     }
