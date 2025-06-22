@@ -35,7 +35,9 @@ export default function ProductList() {
   useEffect(() => {
     async function load() {
       try {
-        const data = await getProducts('all')
+        const company = JSON.parse(localStorage.getItem('userData') || '{}').Company
+        const query = company || 'all'
+        const data = await getProducts(query)
         setProducts(data)
       } catch (err) {
         console.error(err)
