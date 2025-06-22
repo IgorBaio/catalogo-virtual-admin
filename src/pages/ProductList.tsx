@@ -76,17 +76,19 @@ export default function ProductList() {
         prev.map((item) => (item.id === editing.id ? editing : item))
       )
       setOpen(false)
+      setErrorMsg(null)
     } catch (err) {
       console.error(err)
       setOpen(false)
       setErrorMsg('Erro ao atualizar produto')
     }
   }
-
+  
   async function remove(id: string) {
     try {
       await deleteProduct(id)
       setProducts((prev) => prev.filter((item) => item.id !== id))
+      setErrorMsg(null)
     } catch (err) {
       console.error(err)
       setErrorMsg('Erro ao remover produto')
@@ -156,7 +158,8 @@ export default function ProductList() {
                 name="ownerId"
                 placeholder="Owner"
                 value={editing.ownerId}
-                onChange={handleChange}
+                disabled
+                style={{ border: 'none' }}
               />
               <Input
                 name="name"
