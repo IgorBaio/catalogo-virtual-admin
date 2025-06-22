@@ -12,6 +12,7 @@ import { createProduct } from '@/lib/api'
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([])
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
+  const company = JSON.parse(localStorage.getItem('userData') || '{}').company
 
   const [form, setForm] = useState<Omit<Product, 'id'>>({
     ownerId: '',
@@ -57,37 +58,29 @@ export default function Products() {
 
   return (
     <div className="products-container">
-        <DrawerMenu />
-        <h1>Produtos</h1>
-        {errorMsg && (
+      <DrawerMenu />
+      <h1>Produtos</h1>
+      {errorMsg && (
+        <>
+          <Separator className="my-4" />
           <Alert className="my-4">
             <AlertTitle>Erro</AlertTitle>
             <AlertDescription>{errorMsg}</AlertDescription>
           </Alert>
-        )}
-        <form onSubmit={addProduct} className="product-form">
-        <Input name="ownerId" placeholder="Owner" value={form.ownerId} onChange={handleChange} />
+        </>
+      )}
+      <Separator className="my-4" />
+      <form onSubmit={addProduct} className="product-form">
+        <Input name="ownerId" placeholder="Owner" value={company} disabled style={{ border: 'none' }} />
         <Input name="name" placeholder="Nome" value={form.name} onChange={handleChange} />
         <Input name="image" placeholder="Imagem" value={form.image} onChange={handleChange} />
         <Input name="price" placeholder="Preço" value={form.price} onChange={handleChange} />
         <Textarea name="description" placeholder="Descrição" value={form.description} onChange={handleChange} />
         <Input name="whatsappMessage" placeholder="Mensagem WhatsApp" value={form.whatsappMessage} onChange={handleChange} />
-      <Separator className="my-4" />
+        <Separator className="my-4" />
         <Button type="submit" variant={"destructive"} >Adicionar</Button>
       </form>
-      <ul className="product-list">
-        {products.map((p) => (
-          <li key={p.id} className="product-item">
-            <img src={p.image} alt={p.name} />
-            <div>
-              <strong>{p.name}</strong>
-              <p>{p.description}</p>
-              <span>R$ {p.price}</span>
-            </div>
-            <button onClick={() => remove(p.id)}>Excluir</button>
-          </li>
-        ))}
-      </ul>
+
     </div>
   )
 }
