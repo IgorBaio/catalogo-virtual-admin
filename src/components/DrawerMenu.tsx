@@ -7,7 +7,10 @@ export default function DrawerMenu() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="ghost" className="mb-4 mr-auto">
+        <Button
+          variant="ghost"
+          className="mb-4 mr-auto fixed left-4 top-4 z-50"
+        >
           <Menu />
         </Button>
       </SheetTrigger>
