@@ -11,7 +11,7 @@ import {
   SheetFooter,
   SheetClose,
 } from '@/components/ui/sheet'
-import type { Product } from '@/lib/api'
+import type { Product, ProductResponse } from '@/lib/api'
 import { getProducts, updateProduct, deleteProduct } from '@/lib/api'
 import {
   AlertDialog,
@@ -35,10 +35,14 @@ export default function ProductList() {
   useEffect(() => {
     async function load() {
       try {
-        const company = JSON.parse(localStorage.getItem('userData') || '{}').Company
+        const company = JSON.parse(localStorage.getItem('userData') || '{}').company
         const query = company || 'all'
-        const data = await getProducts(query)
-        setProducts(data)
+        const productsResult: ProductResponse  = await getProducts(query)
+        const {data} = productsResult || []
+
+        if(data && data.length > 0) {
+          setProducts(data)
+        }
       } catch (err) {
         console.error(err)
       } finally {
@@ -95,14 +99,14 @@ export default function ProductList() {
         <DrawerMenu />
       <h1>Produtos</h1>
       <Separator className="my-4" />
-      <ul className="product-list">
-        {products.map((p) => (
+      <ul className="product-list" key={products.length}>
+        {products?.map((p: Product) => (
           <li key={p.id} className="product-item">
-            <img src={p.Image} alt={p.ProductName} />
+            <img src={p.image} alt={p.name} />
             <div className="flex-1">
-              <strong>{p.ProductName}</strong>
-              <p>{p.Description}</p>
-              <span>R$ {p.Price}</span>
+              <strong>{p.name}</strong>
+              <p>{p.description}</p>
+              <span>R$ {p.price}</span>
             </div>
             <div className="flex gap-2">
               <Button variant="outline" onClick={() => handleEdit(p)}>
@@ -116,7 +120,7 @@ export default function ProductList() {
                   <AlertDialogHeader>
                     <AlertDialogTitle>Remover produto</AlertDialogTitle>
                     <AlertDialogDescription>
-                      Deseja remover {p.ProductName}?
+                      Deseja remover {p.name}?
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
@@ -142,37 +146,37 @@ export default function ProductList() {
               <Input
                 name="OwnerId"
                 placeholder="Owner"
-                value={editing.OwnerId}
+                value={editing.ownerId}
                 onChange={handleChange}
               />
               <Input
                 name="ProductName"
                 placeholder="Nome"
-                value={editing.ProductName}
+                value={editing.name}
                 onChange={handleChange}
               />
               <Input
                 name="Image"
                 placeholder="Imagem"
-                value={editing.Image}
+                value={editing.image}
                 onChange={handleChange}
               />
               <Input
                 name="Price"
                 placeholder="Preço"
-                value={editing.Price}
+                value={editing.price}
                 onChange={handleChange}
               />
               <Textarea
                 name="Description"
                 placeholder="Descrição"
-                value={editing.Description}
+                value={editing.description}
                 onChange={handleChange}
               />
               <Input
                 name="WhatsappMessage"
                 placeholder="Mensagem WhatsApp"
-                value={editing.WhatsappMessage}
+                value={editing.whatsappMessage}
                 onChange={handleChange}
               />
               <SheetFooter className="mt-4">

@@ -1,16 +1,20 @@
 export interface Product {
-  OwnerId: string
-  ProductName: string
-  Image: string
-  Price: string
-  Description: string
+  ownerId?: string
+  name: string
+  image: string
+  price: string
+  description: string
   id: string
-  WhatsappMessage: string
-  Active: string
+  whatsappMessage: string
+  isActive?: string
+}
+
+export interface ProductResponse {
+  data: Product[]
 }
 
 const API_BASE = 'https://catalogo-virtual-server.onrender.com'
-export async function getProducts(query: string): Promise<Product[]> {
+export async function getProducts(query: string): Promise<ProductResponse> {
   const res = await fetch(`${API_BASE}/api/produto/query/${encodeURIComponent(query)}`)
   if (!res.ok) throw new Error(res.statusText)
   return res.json()
@@ -27,7 +31,7 @@ export async function updateProduct(product: Product) {
 }
 
 export async function deleteProduct(id: string) {
-  const res = await fetch(`${API_BASE}/produtos/${id}`, {
+  const res = await fetch(`${API_BASE}/api/produto/delete/${id}`, {
     method: 'DELETE',
   })
   if (!res.ok) throw new Error(res.statusText)
