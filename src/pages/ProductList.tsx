@@ -78,6 +78,7 @@ export default function ProductList() {
       setOpen(false)
     } catch (err) {
       console.error(err)
+      setOpen(false)
       setErrorMsg('Erro ao atualizar produto')
     }
   }
