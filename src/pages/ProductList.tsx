@@ -144,37 +144,37 @@ export default function ProductList() {
           {editing && (
             <form onSubmit={saveEdit} className="product-form mt-4">
               <Input
-                name="OwnerId"
+                name="ownerId"
                 placeholder="Owner"
                 value={editing.ownerId}
                 onChange={handleChange}
               />
               <Input
-                name="ProductName"
+                name="name"
                 placeholder="Nome"
                 value={editing.name}
                 onChange={handleChange}
               />
               <Input
-                name="Image"
+                name="image"
                 placeholder="Imagem"
                 value={editing.image}
                 onChange={handleChange}
               />
               <Input
-                name="Price"
+                name="price"
                 placeholder="Preço"
                 value={editing.price}
                 onChange={handleChange}
               />
               <Textarea
-                name="Description"
+                name="description"
                 placeholder="Descrição"
                 value={editing.description}
                 onChange={handleChange}
               />
               <Input
-                name="WhatsappMessage"
+                name="whatsappMessage"
                 placeholder="Mensagem WhatsApp"
                 value={editing.whatsappMessage}
                 onChange={handleChange}

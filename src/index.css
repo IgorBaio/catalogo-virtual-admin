@@ -139,6 +139,18 @@ button:focus-visible {
   object-fit: cover;
 }
 
+@media (max-width: 600px) {
+  .product-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .product-item img {
+    width: 100%;
+    height: auto;
+  }
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
