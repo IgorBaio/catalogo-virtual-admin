@@ -81,6 +81,13 @@ export default function Products() {
         <Input name="ownerId" placeholder="Owner" value={company} disabled style={{ border: 'none' }} />
         <Input name="name" placeholder="Nome" value={form.name} onChange={handleChange} />
         <Input type="file" name="image" onChange={handleImageChange} />
+        {form.image && (
+          <img
+            src={form.image}
+            alt="Preview"
+            style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+          />
+        )}
         <Input name="price" placeholder="Preço" value={form.price} onChange={handleChange} />
         <Textarea name="description" placeholder="Descrição" value={form.description} onChange={handleChange} />
         <Input name="whatsappMessage" placeholder="Mensagem WhatsApp" value={form.whatsappMessage} onChange={handleChange} />
