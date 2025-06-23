@@ -127,14 +127,15 @@ button:focus-visible {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  align-items: center;
+  align-items: stretch;
 }
 
 .product-item {
   display: flex;
   gap: 1rem;
   align-items: center;
-  text-align: center;
+  justify-content: space-between;
+  text-align: left;
 }
 
 .product-item img {
