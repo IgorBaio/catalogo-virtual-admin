@@ -35,8 +35,28 @@ export default function Products() {
     if (!file) return
 
     const reader = new FileReader()
-    reader.onloadend = () => {
-      setForm((prev) => ({ ...prev, image: reader.result as string }))
+    reader.onload = () => {
+      const img = new Image()
+      img.onload = () => {
+        const canvas = document.createElement('canvas')
+        const MAX_DIMENSION = 400
+        let { width, height } = img
+        if (width > height && width > MAX_DIMENSION) {
+          height = (height * MAX_DIMENSION) / width
+          width = MAX_DIMENSION
+        } else if (height > MAX_DIMENSION) {
+          width = (width * MAX_DIMENSION) / height
+          height = MAX_DIMENSION
+        }
+        canvas.width = width
+        canvas.height = height
+        const ctx = canvas.getContext('2d')
+        if (!ctx) return
+        ctx.drawImage(img, 0, 0, width, height)
+        const compressed = canvas.toDataURL('image/jpeg', 0.7)
+        setForm((prev) => ({ ...prev, image: compressed }))
+      }
+      img.src = reader.result as string
     }
     reader.readAsDataURL(file)
   }
