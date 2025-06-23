@@ -67,6 +67,37 @@ export default function ProductList() {
     setEditing({ ...editing, [e.target.name]: e.target.value })
   }
 
+  function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file || !editing) return
+
+    const reader = new FileReader()
+    reader.onload = () => {
+      const img = new Image()
+      img.onload = () => {
+        const canvas = document.createElement('canvas')
+        const MAX_DIMENSION = 400
+        let { width, height } = img
+        if (width > height && width > MAX_DIMENSION) {
+          height = (height * MAX_DIMENSION) / width
+          width = MAX_DIMENSION
+        } else if (height > MAX_DIMENSION) {
+          width = (width * MAX_DIMENSION) / height
+          height = MAX_DIMENSION
+        }
+        canvas.width = width
+        canvas.height = height
+        const ctx = canvas.getContext('2d')
+        if (!ctx) return
+        ctx.drawImage(img, 0, 0, width, height)
+        const compressed = canvas.toDataURL('image/jpeg', 0.7)
+        setEditing((prev) => (prev ? { ...prev, image: compressed } : null))
+      }
+      img.src = reader.result as string
+    }
+    reader.readAsDataURL(file)
+  }
+
   async function saveEdit(e: React.FormEvent) {
     e.preventDefault()
     if (!editing) return
@@ -167,12 +198,14 @@ export default function ProductList() {
                 value={editing.name}
                 onChange={handleChange}
               />
-              <Input
-                name="image"
-                placeholder="Imagem"
-                value={editing.image}
-                onChange={handleChange}
-              />
+              <Input type="file" name="image" onChange={handleImageChange} />
+              {editing.image && (
+                <img
+                  src={editing.image}
+                  alt="Preview"
+                  style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                />
+              )}
               <Input
                 name="price"
                 placeholder="Preço"

@@ -15,7 +15,7 @@ export default function Products() {
   const company = JSON.parse(localStorage.getItem('userData') || '{}').company
 
   const [form, setForm] = useState<Omit<Product, 'id'>>({
-    ownerId: '',
+    ownerId: company || '',
     name: '',
     image: '',
     price: '',
