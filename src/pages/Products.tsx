@@ -20,7 +20,7 @@ export default function Products() {
     image: '',
     price: '',
     description: '',
-    whatsappMessage: '',
+    category: '',
     isActive: 'true',
   })
 
@@ -73,7 +73,7 @@ export default function Products() {
         image: '',
         price: '',
         description: '',
-        whatsappMessage: '',
+        category: '',
         isActive: 'true',
       })
       setErrorMsg(null)
@@ -110,7 +110,7 @@ export default function Products() {
         )}
         <Input name="price" placeholder="Preço" value={form.price} onChange={handleChange} />
         <Textarea name="description" placeholder="Descrição" value={form.description} onChange={handleChange} />
-        <Input name="whatsappMessage" placeholder="Mensagem WhatsApp" value={form.whatsappMessage} onChange={handleChange} />
+        <Input name="category" placeholder="Categoria do Produto" value={form.category} onChange={handleChange} />
         <Separator className="my-4" />
         <Button type="submit" variant={"destructive"} >Adicionar</Button>
       </form>

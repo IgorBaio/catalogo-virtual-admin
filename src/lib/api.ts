@@ -5,7 +5,7 @@ export interface Product {
   price: string
   description: string
   id: string
-  whatsappMessage: string
+  category: string
   isActive?: string
 }
 
@@ -24,7 +24,7 @@ export interface ProductRequest {
   Price: number
   Description: string
   id: string
-  WhatsappMessage: string
+  Category: string
   Active: string
 }
 
@@ -34,7 +34,7 @@ export interface ProductCreateRequest {
   Image: string
   Price: number
   Description: string
-  WhatsappMessage: string
+  Category: string
   Active: string
 }
 
@@ -54,7 +54,7 @@ export async function updateProduct(product: Product) {
     Price:  Number(typeof product.price == typeof "" ? product.price?.replace(',', '.'): product.price) ,
     Description: product.description,
     id: product.id,
-    WhatsappMessage: product.whatsappMessage,
+    Category: product.category,
     Active: product.isActive?.toString() || 'true',
   }
 
@@ -83,7 +83,7 @@ export async function createProduct(product: Omit<Product, 'id'>): Promise<Creat
     Image: product.image,
     Price: Number(product.price.replace(',', '.')),
     Description: product.description,
-    WhatsappMessage: product.whatsappMessage,
+    Category: product.category,
     Active: product.isActive?.toString() || 'true',
   }
 

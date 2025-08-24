@@ -219,9 +219,9 @@ export default function ProductList() {
                 onChange={handleChange}
               />
               <Input
-                name="whatsappMessage"
+                name="category"
                 placeholder="Mensagem WhatsApp"
-                value={editing.whatsappMessage}
+                value={editing.category}
                 onChange={handleChange}
               />
               <SheetFooter className="mt-4">
