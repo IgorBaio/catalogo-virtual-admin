@@ -1,9 +1,17 @@
 import { Menu } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
 
 export default function DrawerMenu() {
+  const navigate = useNavigate()
+
+  function handleLogout() {
+    localStorage.removeItem('logged')
+    localStorage.removeItem('userData')
+    navigate('/login')
+  }
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -18,6 +26,7 @@ export default function DrawerMenu() {
         <nav className="mt-8 flex flex-col gap-4">
           <Link to="/products">Cadastro de Produtos</Link>
           <Link to="/list">Lista de Produtos</Link>
+          <Button variant="destructive" onClick={handleLogout}>Sair</Button>
         </nav>
       </SheetContent>
     </Sheet>
