@@ -38,7 +38,7 @@ export interface ProductCreateRequest {
   Active: string
 }
 
-const API_BASE = 'https://catalogo-virtual-server.onrender.com'
+const API_BASE = 'https://catalogo-virtual-server.baiosystems.com.br'
 export async function getProducts(query: string): Promise<ProductResponse> {
   const res = await fetch(`${API_BASE}/api/produto/query/${encodeURIComponent(query)}`)
   if (!res.ok) throw new Error(res.statusText)

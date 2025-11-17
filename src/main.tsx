@@ -6,7 +6,7 @@ import App from './App'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter basename='/catalogo-virtual-admin'>
+    <BrowserRouter >
       <App />
     </BrowserRouter>
   </StrictMode>,
